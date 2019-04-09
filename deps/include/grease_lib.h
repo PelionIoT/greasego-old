@@ -1,4 +1,14 @@
 /*
+ * GreaseLogger.h
+ *
+ * greaselib bindings
+ * launch the grease logging process via these library calls
+ *
+ *  Created on: Nov 23, 2016
+ *      Author: ed
+ * (c) 2016, WigWag Inc
+ */
+/*
     MIT License
 
     Copyright (c) 2019, Arm Limited and affiliates.
@@ -24,16 +34,6 @@
     SOFTWARE.
 */
 
-/*
- * GreaseLogger.h
- *
- * greaselib bindings
- * launch the grease logging process via these library calls
- *
- *  Created on: Nov 23, 2016
- *      Author: ed
- * (c) 2016, WigWag Inc
- */
 
 
 #ifndef GreaseLib_H_
