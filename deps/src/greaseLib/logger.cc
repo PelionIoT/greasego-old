@@ -888,7 +888,7 @@ void GreaseLogger::_doLibCallback(GreaseLogger::logTarget::writeCBData &data) {
 		buf->_id = (int) data.t->myId;
 		buf->_shadow = data.b; // hide the original object here in void *
 		data.t->logCallback(NULL,buf,data.t->myId);
-		LFREE(buf);
+		
 
 // Below replaced, see returnBufferToTarget() above
 //		data.t->finalizeV8Callback(data.b);
