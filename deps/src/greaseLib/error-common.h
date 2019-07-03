@@ -1,10 +1,8 @@
 /*
     MIT License
 
-    Copyright (c) 2019, Arm Limited and affiliates.
+    Copyright (c) 2018 WigWag Inc.
 
-    SPDX-License-Identifier: MIT
-    
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
@@ -142,7 +140,8 @@ namespace _errcmn {
 			}
 			if(in) {
 				in->_errno = this->_errno;
-				::strncpy(in->errstr,this->errstr,GREASE_LIB_MAX_ERR_STRING);
+				::strncpy(in->errstr, this->errstr, GREASE_LIB_MAX_ERR_STRING-1);
+				in->errstr[GREASE_LIB_MAX_ERR_STRING-1] = '\0';
 			}
 			return in;
 		}

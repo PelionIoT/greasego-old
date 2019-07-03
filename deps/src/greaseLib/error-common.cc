@@ -1,10 +1,8 @@
 /*
     MIT License
 
-    Copyright (c) 2019, Arm Limited and affiliates.
+    Copyright (c) 2018 WigWag Inc.
 
-    SPDX-License-Identifier: MIT
-    
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
@@ -934,7 +932,8 @@ custom_errno custom_errs[] = {
 
 
 	char *get_custom_err_str(int _errno) {
-		int n = sizeof(custom_errs);
+		// Get the number of elements in custom_errs[]
+		int n = sizeof(custom_errs) / sizeof(custom_errno);
 		while(n > 0) {
 			if(custom_errs[n-1].code == _errno) {
 				return (char *) custom_errs[n-1].label;

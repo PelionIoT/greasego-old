@@ -1,17 +1,8 @@
 /*
- * grease_lib.c
- *
- *  Created on: Nov 26, 2016
- *      Author: ed
- * (c) 2016, WigWag Inc.
- */
-/*
     MIT License
 
-    Copyright (c) 2019, Arm Limited and affiliates.
+    Copyright (c) 2018 WigWag Inc.
 
-    SPDX-License-Identifier: MIT
-    
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
@@ -31,6 +22,13 @@
     SOFTWARE.
 */
 
+/*
+ * grease_lib.c
+ *
+ *  Created on: Nov 26, 2016
+ *      Author: ed
+ * (c) 2016, WigWag Inc.
+ */
 
 #include <uv.h>
 #include <stdlib.h>
@@ -39,18 +37,9 @@
 #include "grease_client.h"
 #include "grease_common_tags.h"
 #include "logger.h"
-#include "version.h"
 
 using namespace Grease;
 
-
-// dumps version information to s, with a maximum
-// char output of len
-void GreaseLib_getVersion(char *s, int len) {
-	if (len > 1) {
-		snprintf(s,len-1,"grease_lib ver %s commit %s",GREASE_LIB_VERSION,GREASE_LIB_COMMIT);
-	}
-}
 
 void GreaseLib_init_GreaseLibBuf(GreaseLibBuf *b)
 {
@@ -370,11 +359,12 @@ LIB_METHOD(shutdown) {
 		uv_timer_stop(&idleTimer);
 		uv_loop_close(&libLoop);
 		uv_mutex_unlock(&runningLock);
-		//		uv_timer_stop(&libMainTimer);
 	}
 	return GREASE_LIB_OK;
 }
 
+// waitOn waits for mutex which is locked when library is initialized
+// and freed only when LIB_METHOD(shutdown) is called
 void GreaseLib_waitOnGreaseShutdown() {
 	uv_mutex_lock(&runningLock);
 	uv_mutex_unlock(&runningLock);
@@ -779,7 +769,6 @@ LIB_METHOD_SYNC(modifyDefaultTarget,GreaseLibTargetOpts *opts) {
 			}
 
 			if(opts->fileOpts->_enabledFlags & GREASE_LIB_SET_FILEOPTS_ROTATE) {
-				rotateOpts.enabled = true;
 				if(opts->fileOpts->_enabledFlags & GREASE_LIB_SET_FILEOPTS_MAXFILES) rotateOpts.max_files = opts->fileOpts->max_files;
 				if(opts->fileOpts->_enabledFlags & GREASE_LIB_SET_FILEOPTS_MAXFILESIZE) rotateOpts.max_file_size = opts->fileOpts->max_file_size;
 				if(opts->fileOpts->_enabledFlags & GREASE_LIB_SET_FILEOPTS_MAXTOTALSIZE) rotateOpts.max_total_size = opts->fileOpts->max_total_size;
@@ -906,7 +895,6 @@ LIB_METHOD(addTarget,GreaseLibTargetOpts *opts) {
 			}
 
 			if(opts->fileOpts->_enabledFlags & GREASE_LIB_SET_FILEOPTS_ROTATE) {
-				rotateOpts.enabled = true;
 				if(opts->fileOpts->_enabledFlags & GREASE_LIB_SET_FILEOPTS_MAXFILES) rotateOpts.max_files = opts->fileOpts->max_files;
 				if(opts->fileOpts->_enabledFlags & GREASE_LIB_SET_FILEOPTS_MAXFILESIZE) rotateOpts.max_file_size = opts->fileOpts->max_file_size;
 				if(opts->fileOpts->_enabledFlags & GREASE_LIB_SET_FILEOPTS_MAXTOTALSIZE) rotateOpts.max_total_size = opts->fileOpts->max_total_size;
